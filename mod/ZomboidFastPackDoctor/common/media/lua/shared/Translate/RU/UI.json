@@ -1,0 +1,18 @@
+{
+    "UI_FastPack_Title": "Отчёт FastPack",
+    "UI_FastPack_RuntimeScope": "Измеряет совместимые с FastPack обработчики и отложенные задачи. Нативный загрузчик и чужие незарегистрированные callbacks не измеряются.",
+    "UI_FastPack_CompanionHint": "Для глубокой проверки до запуска нужен бесплатный Companion с GitHub.",
+    "UI_FastPack_Summary": "В очереди: %1 | Завершено: %2 | Ошибки: %3 | Предупреждения: %4",
+    "UI_FastPack_MenuReached": "От загрузки FastPack до главного меню: %1",
+    "UI_FastPack_WorldReached": "От загрузки FastPack до старта мира: %1",
+    "UI_FastPack_PlayerReached": "От загрузки FastPack до создания игрока: %1",
+    "UI_FastPack_Callbacks": "Профилируемые обработчики",
+    "UI_FastPack_NoCallbacks": "Моды ещё не регистрировали профилируемые обработчики через FastPack.",
+    "UI_FastPack_CompletedTasks": "Завершённые отложенные задачи",
+    "UI_FastPack_FailedTasks": "Упавшие отложенные задачи",
+    "UI_FastPack_NoTasks": "Отложенные задачи пока не завершались.",
+    "UI_FastPack_Refresh": "Обновить",
+    "UI_FastPack_WriteReport": "Записать runtime JSON",
+    "UI_FastPack_OpenGitHub": "Скачать Companion",
+    "UI_FastPack_Open": "Отчёт FastPack"
+}

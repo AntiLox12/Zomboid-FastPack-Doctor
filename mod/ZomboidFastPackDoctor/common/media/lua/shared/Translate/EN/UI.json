@@ -1,0 +1,18 @@
+{
+    "UI_FastPack_Title": "FastPack Runtime Report",
+    "UI_FastPack_RuntimeScope": "Measures FastPack-compatible callbacks and deferred tasks. It does not measure the native loader or unregistered callbacks.",
+    "UI_FastPack_CompanionHint": "Deep pre-launch diagnostics require the free Companion from GitHub.",
+    "UI_FastPack_Summary": "Pending: %1 | Completed: %2 | Failed: %3 | Warnings: %4",
+    "UI_FastPack_MenuReached": "FastPack module to main menu: %1",
+    "UI_FastPack_WorldReached": "FastPack module to world start: %1",
+    "UI_FastPack_PlayerReached": "FastPack module to player creation: %1",
+    "UI_FastPack_Callbacks": "Profiled callbacks",
+    "UI_FastPack_NoCallbacks": "No mods have registered profiled callbacks through FastPack.",
+    "UI_FastPack_CompletedTasks": "Completed deferred tasks",
+    "UI_FastPack_FailedTasks": "Failed deferred tasks",
+    "UI_FastPack_NoTasks": "No deferred task has completed yet.",
+    "UI_FastPack_Refresh": "Refresh",
+    "UI_FastPack_WriteReport": "Write runtime JSON",
+    "UI_FastPack_OpenGitHub": "Get full Companion",
+    "UI_FastPack_Open": "FastPack Report"
+}

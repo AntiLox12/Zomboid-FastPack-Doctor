@@ -1,0 +1,17 @@
+[project]
+name = "zomboid-fastpack-doctor"
+version = "0.1.0"
+description = "Diagnostics and cooperative lazy initialization for Project Zomboid Build 42 modpacks"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "AntiLox" }]
+
+[project.scripts]
+fastpack = "fastpack_doctor.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "companion" }
+
+[tool.setuptools.packages.find]
+where = ["companion"]
+
