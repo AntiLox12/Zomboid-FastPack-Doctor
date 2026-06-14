@@ -1,6 +1,6 @@
 [project]
 name = "zomboid-fastpack-doctor"
-version = "0.1.0"
+version = "0.1.1"
 description = "Diagnostics and cooperative lazy initialization for Project Zomboid Build 42 modpacks"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -14,4 +14,3 @@ package-dir = { "" = "companion" }
 
 [tool.setuptools.packages.find]
 where = ["companion"]
-

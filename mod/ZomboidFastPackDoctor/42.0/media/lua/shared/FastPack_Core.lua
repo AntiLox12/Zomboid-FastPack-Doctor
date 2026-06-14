@@ -1,6 +1,6 @@
 FastPack = FastPack or {}
 
-FastPack.VERSION = "0.1.0"
+FastPack.VERSION = "0.1.1"
 FastPack.PROJECT_URL = "https://github.com/AntiLox12/Zomboid-FastPack-Doctor"
 FastPack.RELEASES_URL = FastPack.PROJECT_URL .. "/releases/latest"
 FastPack.DEFAULT_FRAME_BUDGET_MS = 6

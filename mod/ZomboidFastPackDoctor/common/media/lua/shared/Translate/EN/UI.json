@@ -14,5 +14,10 @@
     "UI_FastPack_Refresh": "Refresh",
     "UI_FastPack_WriteReport": "Write runtime JSON",
     "UI_FastPack_OpenGitHub": "Get full Companion",
+    "UI_FastPack_StatusRefreshed": "Report refreshed.",
+    "UI_FastPack_StatusWritten": "Runtime report written to Zomboid/Lua/%1",
+    "UI_FastPack_StatusWriteFailed": "Could not write the runtime report. Check console.txt.",
+    "UI_FastPack_StatusBrowserOpened": "Companion download page opened.",
+    "UI_FastPack_StatusBrowserFailed": "Could not open the browser. Use the GitHub link from the mod page.",
     "UI_FastPack_Open": "FastPack Report"
 }

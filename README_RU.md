@@ -32,7 +32,7 @@ Project Zomboid Build 42. Он ищет измеримые проблемы ко
 
 ## Windows Companion
 
-Скачайте `FastPackDoctor-Windows-v0.1.0.zip` из
+Скачайте `FastPackDoctor-Windows-v0.1.1.zip` из
 [последнего релиза](https://github.com/AntiLox12/Zomboid-FastPack-Doctor/releases/latest),
 распакуйте архив и выполните:
 

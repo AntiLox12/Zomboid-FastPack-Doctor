@@ -32,7 +32,7 @@ install or run the external Companion application.
 
 ## Windows Companion
 
-Download `FastPackDoctor-Windows-v0.1.0.zip` from the
+Download `FastPackDoctor-Windows-v0.1.1.zip` from the
 [latest release](https://github.com/AntiLox12/Zomboid-FastPack-Doctor/releases/latest),
 extract it, and run:
 

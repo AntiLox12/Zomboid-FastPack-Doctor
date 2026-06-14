@@ -690,7 +690,7 @@ def scan(config: ScanConfig) -> dict[str, Any]:
 
     return {
         "schema_version": 1,
-        "tool_version": "0.1.0",
+        "tool_version": "0.1.1",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "game_version": config.game_version,
         "profile_hash": _profile_hash(active_tokens, stats),

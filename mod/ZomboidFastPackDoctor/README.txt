@@ -1,4 +1,4 @@
-Zomboid FastPack Doctor 0.1.0
+Zomboid FastPack Doctor 0.1.1
 
 Build 42.19+
 

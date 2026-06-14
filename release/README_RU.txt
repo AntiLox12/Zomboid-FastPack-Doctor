@@ -1,4 +1,4 @@
-ZOMBOID FASTPACK DOCTOR - WINDOWS COMPANION 0.1.0
+ZOMBOID FASTPACK DOCTOR - WINDOWS COMPANION 0.1.1
 
 БЫСТРЫЙ ЗАПУСК
 
@@ -28,4 +28,3 @@ FastPackDoctor.exe scan --server-ini "путь\к\servertest.ini"
 
 Проект и обновления:
 https://github.com/AntiLox12/Zomboid-FastPack-Doctor
-

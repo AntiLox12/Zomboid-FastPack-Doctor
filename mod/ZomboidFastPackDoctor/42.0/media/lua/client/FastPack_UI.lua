@@ -16,13 +16,17 @@ local function formatDuration(milliseconds)
     return string.format("%dm %.1fs", math.floor(seconds / 60), seconds % 60)
 end
 
-local function buildReportText()
+local function buildReportText(statusMessage, statusGood)
     local lines = {}
-    table.insert(lines, "<H1>" .. getText("UI_FastPack_Title") .. "</H1>")
-    table.insert(lines, "<LINE>" .. getText("UI_FastPack_RuntimeScope"))
-    table.insert(lines, "<LINE><RGB:0.55,0.8,1>" .. getText("UI_FastPack_CompanionHint"))
-    table.insert(lines, "<LINE>")
-    table.insert(lines, "<LINE>" .. getText(
+    table.insert(lines, " <H1> <CENTRE> " .. getText("UI_FastPack_Title"))
+    table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText("UI_FastPack_RuntimeScope"))
+    table.insert(lines, " <LINE> <TEXT> <LEFT> <RGB:0.55,0.8,1> "
+        .. getText("UI_FastPack_CompanionHint"))
+    if statusMessage then
+        local color = statusGood and "<GREEN>" or "<RED>"
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. color .. " " .. statusMessage)
+    end
+    table.insert(lines, " <LINE> <LINE> <TEXT> <LEFT> <RGB:0.65,0.85,1> " .. getText(
         "UI_FastPack_Summary",
         FastPack.getPendingCount(),
         #FastPack.completed,
@@ -31,60 +35,78 @@ local function buildReportText()
     ))
 
     if FastPack.menuReachedAt then
-        table.insert(lines, "<LINE>" .. getText(
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText(
             "UI_FastPack_MenuReached",
             formatDuration(FastPack.menuReachedAt)
         ))
     end
     if FastPack.worldStartedAt then
-        table.insert(lines, "<LINE>" .. getText(
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText(
             "UI_FastPack_WorldReached",
             formatDuration(FastPack.worldStartedAt)
         ))
     end
     if FastPack.playerCreatedAt then
-        table.insert(lines, "<LINE>" .. getText(
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText(
             "UI_FastPack_PlayerReached",
             formatDuration(FastPack.playerCreatedAt)
         ))
     end
 
-    table.insert(lines, "<LINE><H2>" .. getText("UI_FastPack_Callbacks") .. "</H2>")
+    table.insert(lines, " <LINE> <LINE> <H2> <LEFT> " .. getText("UI_FastPack_Callbacks"))
     local rows = FastPack.getProfileRows()
     if #rows == 0 then
-        table.insert(lines, "<LINE>" .. getText("UI_FastPack_NoCallbacks"))
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText("UI_FastPack_NoCallbacks"))
     else
         for index = 1, math.min(#rows, 30) do
             local row = rows[index]
-            table.insert(lines, "<LINE><RGB:1,0.8,0.35>" .. row.key
-                .. " <RGB:1,1,1>" .. tostring(row.calls) .. " calls | "
+            table.insert(lines, " <LINE> <TEXT> <LEFT> <RGB:1,0.8,0.35> " .. row.key
+                .. " <RGB:1,1,1> " .. tostring(row.calls) .. " calls | "
                 .. tostring(row.totalMs) .. "ms total | "
                 .. tostring(row.maxMs) .. "ms max")
         end
     end
 
-    table.insert(lines, "<LINE><H2>" .. getText("UI_FastPack_CompletedTasks") .. "</H2>")
+    table.insert(lines, " <LINE> <LINE> <H2> <LEFT> " .. getText("UI_FastPack_CompletedTasks"))
     if #FastPack.completed == 0 then
-        table.insert(lines, "<LINE>" .. getText("UI_FastPack_NoTasks"))
+        table.insert(lines, " <LINE> <TEXT> <LEFT> " .. getText("UI_FastPack_NoTasks"))
     else
         for index = 1, math.min(#FastPack.completed, 30) do
             local row = FastPack.completed[index]
-            table.insert(lines, "<LINE><RGB:0.55,0.9,0.65>"
+            table.insert(lines, " <LINE> <TEXT> <LEFT> <RGB:0.55,0.9,0.65> "
                 .. row.owner .. ":" .. row.name
-                .. " <RGB:1,1,1>" .. tostring(row.totalMs) .. "ms | "
+                .. " <RGB:1,1,1> " .. tostring(row.totalMs) .. "ms | "
                 .. tostring(row.runs) .. " steps")
         end
     end
     if #FastPack.failed > 0 then
-        table.insert(lines, "<LINE><H2>" .. getText("UI_FastPack_FailedTasks") .. "</H2>")
+        table.insert(lines, " <LINE> <LINE> <H2> <LEFT> " .. getText("UI_FastPack_FailedTasks"))
         for index = 1, math.min(#FastPack.failed, 30) do
             local row = FastPack.failed[index]
-            table.insert(lines, "<LINE><RED>"
+            table.insert(lines, " <LINE> <TEXT> <LEFT> <RED> "
                 .. row.owner .. ":" .. row.name
-                .. " <RGB:1,1,1>" .. tostring(row.error))
+                .. " <RGB:1,1,1> " .. tostring(row.error))
         end
     end
     return table.concat(lines)
+end
+
+local function openCompanionUrl()
+    local opened, errorMessage = pcall(function()
+        if type(isSteamOverlayEnabled) == "function"
+                and isSteamOverlayEnabled()
+                and type(activateSteamOverlayToWebPage) == "function" then
+            activateSteamOverlayToWebPage(FastPack.RELEASES_URL)
+        elseif type(openUrl) == "function" then
+            openUrl(FastPack.RELEASES_URL)
+        else
+            error("No URL opener is available")
+        end
+    end)
+    if not opened then
+        print("[FastPack] Could not open Companion URL: " .. tostring(errorMessage))
+    end
+    return opened
 end
 
 function FastPackReportPanel:initialise()
@@ -95,6 +117,10 @@ function FastPackReportPanel:initialise()
     self.report.background = false
     self.report.autosetheight = false
     self.report.clip = true
+    self.report.marginLeft = 8
+    self.report.marginRight = 16
+    self.report.marginTop = 4
+    self.report.marginBottom = 8
     self.report:addScrollBars()
     self:addChild(self.report)
 
@@ -153,22 +179,28 @@ function FastPackReportPanel:initialise()
 end
 
 function FastPackReportPanel:refresh()
-    self.report.text = buildReportText()
+    self.report.text = buildReportText(self.statusMessage, self.statusGood)
     self.report:paginate()
 end
 
 function FastPackReportPanel:onButton(button)
     if button.internal == "REFRESH" then
+        self.statusMessage = getText("UI_FastPack_StatusRefreshed")
+        self.statusGood = true
         self:refresh()
     elseif button.internal == "WRITE" then
-        FastPack.writeRuntimeReport()
+        local written = FastPack.writeRuntimeReport()
+        self.statusGood = written
+        self.statusMessage = written
+            and getText("UI_FastPack_StatusWritten", FastPack.REPORT_FILE)
+            or getText("UI_FastPack_StatusWriteFailed")
         self:refresh()
     elseif button.internal == "GITHUB" then
-        if isSteamModeEnabled() then
-            activateSteamOverlayToWebPage(FastPack.RELEASES_URL)
-        else
-            openUrl(FastPack.RELEASES_URL)
-        end
+        self.statusGood = openCompanionUrl()
+        self.statusMessage = self.statusGood
+            and getText("UI_FastPack_StatusBrowserOpened")
+            or getText("UI_FastPack_StatusBrowserFailed")
+        self:refresh()
     elseif button.internal == "CLOSE" then
         self:close()
     end

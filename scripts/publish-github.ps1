@@ -1,6 +1,12 @@
 $ErrorActionPreference = "Stop"
 
 $repository = "AntiLox12/Zomboid-FastPack-Doctor"
+$versionLine = Select-String -LiteralPath "pyproject.toml" -Pattern '^version = "([^"]+)"$'
+if (-not $versionLine) {
+    throw "Could not read the version from pyproject.toml"
+}
+$version = $versionLine.Matches[0].Groups[1].Value
+$tag = "v$version"
 
 $ghCommand = Get-Command gh -ErrorAction SilentlyContinue
 if ($ghCommand) {
@@ -37,7 +43,7 @@ if (-not $originExists) {
 }
 
 git push --set-upstream origin main
-git push origin v0.1.0
+git push origin $tag
 
 & $gh repo edit $repository `
     --add-topic project-zomboid `
@@ -47,4 +53,4 @@ git push origin v0.1.0
     --add-topic diagnostics
 
 Write-Host "Published: https://github.com/$repository"
-Write-Host "The v0.1.0 tag starts the GitHub Actions release build."
+Write-Host "The $tag tag starts the GitHub Actions release build."
